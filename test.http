@@ -1,0 +1,4 @@
+### GET USERS
+GET {{host}}/api/v1/users/
+
+
