@@ -1,4 +1,5 @@
-const {getProduct,getListProduct,addProduct} = require ('./product.resolvers')
+const {getProduct,getListProduct,addProduct,updateProduct,deleteProduct} = require ('./product.resolvers');
+const {login} = require ('./auth.resolvers');
 
 const resolvers = {
   Query: {
@@ -11,10 +12,13 @@ const resolvers = {
     getID: ()=>'32132321',
     getNumbers:(_,args)=> args.numbers,
     product:getProduct,
-    allProducts:getListProduct,
+    allProducts:getListProduct
   },
   Mutation:{
-    addProduct
+    login,
+    addProduct,
+    updateProduct,
+    deleteProduct
   }
 }
 
