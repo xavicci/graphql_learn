@@ -4,14 +4,25 @@ const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/dra
 const {loadFiles} = require('@graphql-tools/load-files');
 const http= require('http');
 const {buildContext} = require ('graphql-passport')
+const {typeDefs:scalarsTypeDefs,resolvers:scalarsResolvers} = require('graphql-scalars')
 const resolvers = require ('./resolvers');
 
 
 async function useGraphql(app) {
+
+  const typeDefs = [
+    ...await loadFiles('./src/**/*.graphql'),
+    scalarsTypeDefs
+  ];
+  const allResolvers = [
+    resolvers,
+    scalarsResolvers
+  ];
+
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
-    typeDefs: await loadFiles('./src/**/*.graphql'),
-    resolvers,
+    typeDefs,
+    resolvers:allResolvers,
     context: ({req,res})=> buildContext({req,res}),
      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   })

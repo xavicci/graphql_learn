@@ -21,18 +21,20 @@ type Product {
   createAt: String!
   categoryId:ID!
   category: Category!
+
 }
 type Category {
   id: ID!
   name:String!
-  image:String!
+  image:URL!
 }
 
 type Mutation {
-  login(email: String!, password: String!):AuthResponse
+  login(email: EmailAddress!, password: String!):AuthResponse
   addProduct(dto: CreateProductDto!): Product
   updateProduct(id: ID!, dto:UpdateProductDto!):Product
   deleteProduct(id: ID!):ID
+  addCategory(dto:CreateCategoryDto): Category
 }
 
 input CreateProductDto {
@@ -49,6 +51,7 @@ input UpdateProductDto {
   image: String
   categoryId: ID
 }
+
 type AuthResponse {
   access_token: String!
   user: User!
@@ -60,3 +63,9 @@ type User {
   role:String!
   createdAt: String!
 }
+input CreateCategoryDto {
+  name: CategoryNameType!
+  image: String!
+}
+
+scalar CategoryNameType
